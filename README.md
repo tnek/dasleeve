@@ -1,12 +1,26 @@
+# Da Sleeve
+
 [![](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/23204139/IMG_1252-300x225.jpg)](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/23204139/IMG_1252.jpg)
 
 Kent Ma & Leon Chou
 
 Da Sleeve is a fabric gauntlet that uses bluetooth and accelerometer data to remotely control a computer's mouse based on motion. It moves the mouse up when the user's arm is raised, down when they're lowered, and left or right when they twist it left or right.  
 
+
 ## Physical Design
 
-[![](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25153626/IMG_1218-300x225.jpg)](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25153626/IMG_1218.jpg) With Marcela's donation of velcro and instruction with the sewing machine, we sewed together the main sleeve to be attached by velcro.         [![](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25154328/IMG_8255-300x225.jpg)](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25154328/IMG_8255.jpg) The accelerometer is on top of the sleeve, roughly where the top of the hand is.           [![](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25154741/IMG_0511-268x300.jpg)](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25154741/IMG_0511.jpg) While testing, we noticed the sleeve kept slipping from it's own weight, preventing the accelerometer itself from moving when the user moves their arm. So, we cut a thumb hole to help keep the sleeve in place.           Here is a video of it being put on: [video text-align="center" width="216" height="384" mp4="http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25165505/IMG_0512_TRIM.mp4"][/video] 
+With Marcela's donation of velcro and instruction with the sewing machine, we sewed together the main sleeve to be attached by velcro.         
+
+[![](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25153626/IMG_1218-300x225.jpg)](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25153626/IMG_1218.jpg) 
+
+The accelerometer is on top of the sleeve, roughly where the top of the hand is. 
+
+[![](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25154328/IMG_8255-300x225.jpg)](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25154328/IMG_8255.jpg) 
+
+While testing, we noticed the sleeve kept slipping from it's own weight, preventing the accelerometer itself from moving when the user moves their arm. So, we cut a thumb hole to help keep the sleeve in place.
+
+[![](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25154741/IMG_0511-268x300.jpg)](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25154741/IMG_0511.jpg)
+
 
 #### Future Physical Sleeve Improvements:
 
@@ -36,7 +50,13 @@ Components:
 *   2 Buttons
 *   2 10k resistors
 
-Initially, we planned on the sleeve having the ability to dead reckon with the screen. That is, an exact 2D position of the arm determines the position of the mouse cursor. However, the equipment room doesn't have a gyroscope - it only had an accelerometer. As a result, there isn't a way to determine that the accelerometer's coordinate system has been rotated with respect to another coordinate system (necessary for double integration from acceleration into position). So we switched to it being just general mouse control using only the accelerometer. [![](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25153420/28946540_1743552932350835_1542100521_o-225x300.jpg)](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25153420/28946540_1743552932350835_1542100521_o.jpg) Additionally, a mouse needs to be able to click, so we used two buttons included in our kit to make mouse buttons. As usual, buttons wired to Arduino digital pins require the two 10k ohm resistors. [![](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/23232011/IMG_0393-300x225.jpg)](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/23232011/IMG_0393.jpg)  
+Initially, we planned on the sleeve having the ability to dead reckon with the screen. That is, an exact 2D position of the arm determines the position of the mouse cursor. However, the equipment room doesn't have a gyroscope - it only had an accelerometer. As a result, there isn't a way to determine that the accelerometer's coordinate system has been rotated with respect to another coordinate system (necessary for double integration from acceleration into position). So we switched to it being just general mouse control using only the accelerometer. 
+
+[![](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25153420/28946540_1743552932350835_1542100521_o-225x300.jpg)](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25153420/28946540_1743552932350835_1542100521_o.jpg) 
+
+Additionally, a mouse needs to be able to click, so we used two buttons included in our kit to make mouse buttons. As usual, buttons wired to Arduino digital pins require the two 10k ohm resistors. 
+
+[![](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/23232011/IMG_0393-300x225.jpg)](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/23232011/IMG_0393.jpg)  
 
 
 #### Future Electrical Improvements:
@@ -48,21 +68,7 @@ Initially, we planned on the sleeve having the ability to dead reckon with the s
 **Alternatively, use a gyroscope for dead reckoning**. Basically, do what we originally wanted to do.  
 
 
-## Programming
-
-I opted to use python, the [PySerial](https://github.com/pyserial/pyserial) library, and a python mouse control library - [PyAutoGUI](https://github.com/asweigart/pyautogui). However, there are problems with mouse movement in real time:
-
-*   There is significant latency since this is a userspace application using a library which is really just a wrapper around Quartz which uses syscalls that actually control the mouse.
-*   Reading from serial is buffered. When data is read, it is the next data transmitted over serial after the last read one instead of the most recent data.
-
-These two problems combined result in rapidly increasing input delay if mouse control functions are called after each tick of the accelerometer's output. The serial buffer isn't emptied fast enough to be in sync with real time events since performing mouse events is slow. So, I wrote an update cycle similar to the input-update-render loop used in networked game graphics programming. Reading from serial is still the input step. However since mouse movement blocks for significantly longer, it is in the update step of the input-update-render loop. This allows us to have a consistent mouse update time (currently set to every 0.3 seconds since that was roughly the time for a moue movement event to fire). instead of using Serial.print with Arduino and corresponding string functions with Python, data is encoded into raw bytes to be read for further performance (reducing bandwidth for transmitting over bluetooth). However, Serial.write on Arduino's side only writes a single byte - it truncates the higher bytes of an integer by default. So, integers had to be written as two-byte values and parsed on the other component. Luckily, since I still kept the values byte-aligned, python's struct module can cleanly and easily unpack it.  
-
-
 #### Future Programming Improvements:
-
-**Data over serial could be compressed into fewer bits (2 bytes)**. We know the maximum degree of tilt is between -180 and 180\. Each degree could be encoded into nine bits and each flag for buttons could take a bit for a total of 11 bits - all of the data could be transmitted in a two byte word instead of the current 6 byte one. However, doing this may sacrifice performance on the computer's side - bitwise operations are slightly more expensive than directly unpacking each byte into it's correct variable. 
-
-**Mouse should be controlled via kernel module**. This removes the syscall latency from having to constantly interrupt between userland and kernel space. Similarly, reading from serial should be done in kernel space within the same module as the mouse control one for further performance improvements. 
 
 **Mouse motions should be interpolated.** Currently, the mouse slightly teleports to move - this is because it is doing rapid linear motion between points per-update instead of being properly interpolated like a real mouse.  
 
