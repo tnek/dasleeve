@@ -9,7 +9,7 @@ Da Sleeve is a fabric gauntlet that uses bluetooth and accelerometer data to rem
 
 ## Physical Design
 
-With Marcela's donation of velcro and instruction with the sewing machine, we sewed together the main sleeve to be attached by velcro.         
+We sewed together the main sleeve to be attached by velcro.         
 
 [![](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25153626/IMG_1218-300x225.jpg)](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25153626/IMG_1218.jpg) 
 
@@ -49,8 +49,6 @@ Components:
 *   1 DFRobot Prototyping shield
 *   2 Buttons
 *   2 10k resistors
-
-Initially, we planned on the sleeve having the ability to dead reckon with the screen. That is, an exact 2D position of the arm determines the position of the mouse cursor. However, the equipment room doesn't have a gyroscope - it only had an accelerometer. As a result, there isn't a way to determine that the accelerometer's coordinate system has been rotated with respect to another coordinate system (necessary for double integration from acceleration into position). So we switched to it being just general mouse control using only the accelerometer. 
 
 [![](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25153420/28946540_1743552932350835_1542100521_o-225x300.jpg)](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25153420/28946540_1743552932350835_1542100521_o.jpg) 
 
