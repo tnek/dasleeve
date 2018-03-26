@@ -22,7 +22,7 @@ While testing, we noticed the sleeve kept slipping from it's own weight, prevent
 [![](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25154741/IMG_0511-268x300.jpg)](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25154741/IMG_0511.jpg)
 
 
-#### Future Physical Sleeve Improvements:
+### Future Physical Sleeve Improvements:
 
 **Buttons should be on the palm of the sleeve****.** When testing, we noticed people had difficulty reaching the buttons with their other hand while controlling or stabilizing the sleeve. Putting the button on the palm makes it entirely controllable with one hand, and also makes it more accessible. 
 
@@ -57,7 +57,7 @@ Additionally, a mouse needs to be able to click, so we used two buttons included
 [![](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/23232011/IMG_0393-300x225.jpg)](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/23232011/IMG_0393.jpg)  
 
 
-#### Future Electrical Improvements:
+### Future Electrical Improvements:
 
 **Use a smaller microcontroller & smaller battery: **Arduino Nanos or Minis are drastically smaller, making it a less cumbersome sleeve. Or, we could print our own PCB with an atmega chip to go even smaller. 
 
@@ -65,9 +65,3 @@ Additionally, a mouse needs to be able to click, so we used two buttons included
 
 **Alternatively, use a gyroscope for dead reckoning**. Basically, do what we originally wanted to do.  
 
-
-#### Future Programming Improvements:
-
-**Mouse motions should be interpolated.** Currently, the mouse slightly teleports to move - this is because it is doing rapid linear motion between points per-update instead of being properly interpolated like a real mouse.  
-
-**Dynamically timing exact mouse movement events for S_PER_UPDATE. **Instead of trial-and-error to come about the value of 0.3 on my laptop, it should try to time how long it takes for a mouse movement function to complete so that it can adapt to any computer.
