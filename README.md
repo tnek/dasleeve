@@ -59,9 +59,9 @@ Additionally, a mouse needs to be able to click, so we used two buttons included
 
 ### Future Electrical Improvements:
 
-**Use a smaller microcontroller & smaller battery: **Arduino Nanos or Minis are drastically smaller, making it a less cumbersome sleeve. Or, we could print our own PCB with an atmega chip to go even smaller. 
+**Use a smaller microcontroller & smaller battery.** Arduino Nanos or Minis are drastically smaller, making it a less cumbersome sleeve. Or, we could print our own PCB with an atmega chip to go even smaller. 
 
 **Use an HID class bluetooth module**: This eliminates a lot of future low level programming, since the device would be able to directly register as a mouse device by the OS. 
 
-**Alternatively, use a gyroscope for dead reckoning**. Basically, do what we originally wanted to do.  
+**Alternatively, use a gyroscope for dead reckoning** Basically, do what we originally wanted to do.  
 
