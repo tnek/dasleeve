@@ -2,7 +2,7 @@
 
 Kent Ma & Leon Chou
 
-We were inspired by the remotely controlled vehicles shown in the movie <span style="text-decoration: underline">Black Panther</span>. There, an inventor character has a bracelet which allows her to interact with all of her devices (such as remotely controlling a car). She interacts with the holographic car by moving her wrists as if steering the wheel. ![](http://i.dailymail.co.uk/i/pix/2018/01/26/02/48960F9700000578-5314631-image-a-6_1516932314469.jpg) Her device later enabled a retired air pilot to pilot an alien Wakandan spaceship - it adapted the controls of the ship to controls that are familiar to him as a jet fighter pilot. Similarly, we wanted our device to be intuitive and allow for familiar motions to control a computer or any other device. This could allow it to be used either by persons with disabilities or just as a new human computing interface for faster learning. So, we looked to make a device which could universally control any computer by using wrist motions. We came up with Da Sleeve, a fabric gauntlet that uses bluetooth and accelerometer data to remotely control a computer's mouse based on motion. It moves the mouse up when the user's arm is raised, down when they're lowered, and left or right when they twist it left or right.  
+Da Sleeve is a fabric gauntlet that uses bluetooth and accelerometer data to remotely control a computer's mouse based on motion. It moves the mouse up when the user's arm is raised, down when they're lowered, and left or right when they twist it left or right.  
 
 ## Physical Design
 
@@ -10,7 +10,20 @@ We were inspired by the remotely controlled vehicles shown in the movie <span s
 
 #### Future Physical Sleeve Improvements:
 
-**Buttons should be on the palm of the sleeve****.** When testing, we noticed people had difficulty reaching the buttons with their other hand while controlling or stabilizing the sleeve. Putting the button on the palm makes it entirely controllable with one hand, and also makes it more accessible. **Wrist component of the sleeve should be separate**. This allows the accelerometer to always align with the back of the hand for a consistent and correct experience. We had problems fitting the sleeve on people with significantly larger or smaller arms while maintaining the correct position for the accelerometer. **Less velcro.** It was difficult to take the sleeve off since the velcro extended far into the bottom of it. **Flap to remove the battery**. We sewed the battery into the sleeve, but without an easy way to remove it. However, the battery pack itself broke prior to demo day and we didn't have any way to replace it without cutting the sleeve open. **Storage for wires**. The battery comes with two wires: one to plug into the arduino and one to charge the battery. There was nowhere to keep the charging port when not charging, so it awkwardly hung out of the sleeve. Similarly, the electronic components were velcroed on to the sleeve instead of a proper storage compartment. **More intuitive thumb hole**. It isn't apparent without instruction which finger to put through the thumb hole, and the accelerometer doesn't properly align to the palm with other fingers on the thumb hole. **More comfortable/softer fabric.** The sleeve's kinda itchy.  
+**Buttons should be on the palm of the sleeve****.** When testing, we noticed people had difficulty reaching the buttons with their other hand while controlling or stabilizing the sleeve. Putting the button on the palm makes it entirely controllable with one hand, and also makes it more accessible. 
+
+**Wrist component of the sleeve should be separate**. This allows the accelerometer to always align with the back of the hand for a consistent and correct experience. We had problems fitting the sleeve on people with significantly larger or smaller arms while maintaining the correct position for the accelerometer. 
+
+**Less velcro.** It was difficult to take the sleeve off since the velcro extended far into the bottom of it. 
+
+**Flap to remove the battery**. We sewed the battery into the sleeve, but without an easy way to remove it. However, the battery pack itself broke prior to demo day and we didn't have any way to replace it without cutting the sleeve open. 
+
+**Storage for wires**. The battery comes with two wires: one to plug into the arduino and one to charge the battery. There was nowhere to keep the charging port when not charging, so it awkwardly hung out of the sleeve. Similarly, the electronic components were velcroed on to the sleeve instead of a proper storage compartment. 
+
+**More intuitive thumb hole**. It isn't apparent without instruction which finger to put through the thumb hole, and the accelerometer doesn't properly align to the palm with other fingers on the thumb hole. 
+
+**More comfortable/softer fabric.** The sleeve's kinda itchy.  
+
 
 ## Electrical
 
@@ -25,9 +38,15 @@ Components:
 
 Initially, we planned on the sleeve having the ability to dead reckon with the screen. That is, an exact 2D position of the arm determines the position of the mouse cursor. However, the equipment room doesn't have a gyroscope - it only had an accelerometer. As a result, there isn't a way to determine that the accelerometer's coordinate system has been rotated with respect to another coordinate system (necessary for double integration from acceleration into position). So we switched to it being just general mouse control using only the accelerometer. [![](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25153420/28946540_1743552932350835_1542100521_o-225x300.jpg)](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/25153420/28946540_1743552932350835_1542100521_o.jpg) Additionally, a mouse needs to be able to click, so we used two buttons included in our kit to make mouse buttons. As usual, buttons wired to Arduino digital pins require the two 10k ohm resistors. [![](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/23232011/IMG_0393-300x225.jpg)](http://s3-ap-southeast-1.amazonaws.com/ima-wp/wp-content/uploads/sites/5/2018/03/23232011/IMG_0393.jpg)  
 
+
 #### Future Electrical Improvements:
 
-**Use a smaller microcontroller & smaller battery: **Arduino Nanos or Minis are drastically smaller, making it a less cumbersome sleeve. Or, we could print our own PCB with an atmega chip to go even smaller. **Use an HID class bluetooth module**: This eliminates a lot of future low level programming, since the device would be able to directly register as a mouse device by the OS. **Alternatively, use a gyroscope for dead reckoning**. Basically, do what we originally wanted to do.  
+**Use a smaller microcontroller & smaller battery: **Arduino Nanos or Minis are drastically smaller, making it a less cumbersome sleeve. Or, we could print our own PCB with an atmega chip to go even smaller. 
+
+**Use an HID class bluetooth module**: This eliminates a lot of future low level programming, since the device would be able to directly register as a mouse device by the OS. 
+
+**Alternatively, use a gyroscope for dead reckoning**. Basically, do what we originally wanted to do.  
+
 
 ## Programming
 
@@ -38,6 +57,13 @@ I opted to use python, the [PySerial](https://github.com/pyserial/pyserial) libr
 
 These two problems combined result in rapidly increasing input delay if mouse control functions are called after each tick of the accelerometer's output. The serial buffer isn't emptied fast enough to be in sync with real time events since performing mouse events is slow. So, I wrote an update cycle similar to the input-update-render loop used in networked game graphics programming. Reading from serial is still the input step. However since mouse movement blocks for significantly longer, it is in the update step of the input-update-render loop. This allows us to have a consistent mouse update time (currently set to every 0.3 seconds since that was roughly the time for a moue movement event to fire). instead of using Serial.print with Arduino and corresponding string functions with Python, data is encoded into raw bytes to be read for further performance (reducing bandwidth for transmitting over bluetooth). However, Serial.write on Arduino's side only writes a single byte - it truncates the higher bytes of an integer by default. So, integers had to be written as two-byte values and parsed on the other component. Luckily, since I still kept the values byte-aligned, python's struct module can cleanly and easily unpack it.  
 
+
 #### Future Programming Improvements:
 
-**Data over serial could be compressed into fewer bits (2 bytes)**. We know the maximum degree of tilt is between -180 and 180\. Each degree could be encoded into nine bits and each flag for buttons could take a bit for a total of 11 bits - all of the data could be transmitted in a two byte word instead of the current 6 byte one. However, doing this may sacrifice performance on the computer's side - bitwise operations are slightly more expensive than directly unpacking each byte into it's correct variable. **Mouse should be controlled via kernel module**. This removes the syscall latency from having to constantly interrupt between userland and kernel space. Similarly, reading from serial should be done in kernel space within the same module as the mouse control one for further performance improvements. **Mouse motions should be interpolated.** Currently, the mouse slightly teleports to move - this is because it is doing rapid linear motion between points per-update instead of being properly interpolated like a real mouse.  **Dynamically timing exact mouse movement events for S_PER_UPDATE. **Instead of trial-and-error to come about the value of 0.3 on my laptop, it should try to time how long it takes for a mouse movement function to complete so that it can adapt to any computer.
+**Data over serial could be compressed into fewer bits (2 bytes)**. We know the maximum degree of tilt is between -180 and 180\. Each degree could be encoded into nine bits and each flag for buttons could take a bit for a total of 11 bits - all of the data could be transmitted in a two byte word instead of the current 6 byte one. However, doing this may sacrifice performance on the computer's side - bitwise operations are slightly more expensive than directly unpacking each byte into it's correct variable. 
+
+**Mouse should be controlled via kernel module**. This removes the syscall latency from having to constantly interrupt between userland and kernel space. Similarly, reading from serial should be done in kernel space within the same module as the mouse control one for further performance improvements. 
+
+**Mouse motions should be interpolated.** Currently, the mouse slightly teleports to move - this is because it is doing rapid linear motion between points per-update instead of being properly interpolated like a real mouse.  
+
+**Dynamically timing exact mouse movement events for S_PER_UPDATE. **Instead of trial-and-error to come about the value of 0.3 on my laptop, it should try to time how long it takes for a mouse movement function to complete so that it can adapt to any computer.
